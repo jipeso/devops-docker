@@ -1,0 +1,24 @@
+services:
+  backend:
+    image: example-backend
+    ports:
+      - 8080:8080
+    environment:
+      REDIS_HOST: redis
+      POSTGRES_HOST: db
+      POSTGRES_PASSWORD: secret
+    restart: unless-stopped
+    depends_on:
+      - redis
+      - db
+  frontend:
+    image: example-frontend
+    ports:
+      - 5000:5000
+  redis:
+    image: redis:latest
+  db:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: secret
